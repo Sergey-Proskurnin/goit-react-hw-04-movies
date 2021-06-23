@@ -2,35 +2,36 @@ import React, {Component} from 'react';
 import Axios from 'axios';
 import { NavLink, Route } from 'react-router-dom';
 
-export default class AuthorsView extends Component {
+import { fetchTrendingDayMovie } from 'services/fetchApi';
+
+export default class HomePage extends Component {
     state = {
       films: [],
     };
+    
+    componentDidMount() {
+      fetchTrendingDayMovie()
+      .then(response => this.setState({ films: response.data.results }))
+      .catch(error => this.setState({ error }));
+     }
+  
     render() {
-        // const { match } = this.props;
+       
     
         return (
           <>
-            <h1>Это HomePage</h1>
+            <h1>Trending today</h1>
     
-            {/* <ul>
-              {this.state.authors.map(author => (
-                <li key={author.id}>
-                  <NavLink to={`${match.url}/${author.id}`}>{author.name}</NavLink>
+             <ul>
+              {this.state.films.map(film => (
+                <li key={film.id}>
+                  <NavLink to=''>{film.title || film.name}</NavLink>
+                
                 </li>
               ))}
             </ul>
     
-            <Route
-              path={`${match.path}/:authorId`}
-              render={props => {
-                const bookId = Number(props.match.params.authorId);
-                const author = this.state.authors.find(({ id }) => id === bookId);
-    
-                return author && <AuthorBooks {...props} books={author.books} />;
-              }}
-            /> */}
-          </>
+           </>
         );
       }
 }

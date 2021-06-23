@@ -3,6 +3,7 @@ import "./App.css";
 
 import HomePage from 'views/HomePage';
 import MoviesPage from 'views/MoviesPage';
+import MoviesDetailesPage from 'views/MoviesDetailesPage';
 
 function App() {
   return (
@@ -32,7 +33,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/movies" component={MoviesPage} />
-        {/* <Route path="movies/:movieId" component={MovieDetailsPage} /> */}
+        <Route path="movies/:movieId" component={MoviesDetailesPage} />
         <Redirect to="/" />
       </Switch>
     </div>

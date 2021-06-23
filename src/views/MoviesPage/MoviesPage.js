@@ -1,36 +1,55 @@
-import React, {Component} from 'react';
-import Axios from 'axios';
+import React, { Component } from 'react';
+
 import { NavLink, Route } from 'react-router-dom';
 
+import { fetchMovieWithQuery } from 'services/fetchApi';
+
 export default class MoviesPage extends Component {
-    state = {
-      films: [],
-    };
-    render() {
-        // const { match } = this.props;
-    
-        return (
-          <>
-            <h1>Это MoviesPage</h1>
-    
-            {/* <ul>
-              {this.state.authors.map(author => (
-                <li key={author.id}>
-                  <NavLink to={`${match.url}/${author.id}`}>{author.name}</NavLink>
-                </li>
-              ))}
-            </ul>
-    
-            <Route
-              path={`${match.path}/:authorId`}
-              render={props => {
-                const bookId = Number(props.match.params.authorId);
-                const author = this.state.authors.find(({ id }) => id === bookId);
-    
-                return author && <AuthorBooks {...props} books={author.books} />;
-              }}
-            /> */}
-          </>
-        );
-      }
+  state = {
+    movies: [],
+    query: '',
+  };
+
+  handleChange = e => {
+    const { value } = e.currentTarget;
+    this.setState({ query: value });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    const { query } = this.state;
+    fetchMovieWithQuery(query)
+      .then(response => this.setState({ movies: response.data.results }))
+      .catch(error => this.setState({ error }));
+  };
+
+  render() {
+    return (
+      <>
+         <form className={'form'} onSubmit={this.handleSubmit}>
+          <label htmlFor={''} className="lable">
+            <input
+              className={'input'}
+              type="text"
+              value={this.state.query}
+              onChange={this.handleChange}
+              id={''}
+            />
+          </label>
+
+          <button className={'button'} type="submit">
+            Search
+          </button>
+        </form>
+
+        <ul>
+          {this.state.movies.map(film => (
+            <li key={film.id}>
+              <NavLink to="">{film.title || film.name}</NavLink>
+            </li>
+          ))}
+        </ul>
+      </>
+    );
+  }
 }

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import Axios from 'axios';
-import { NavLink, Route } from 'react-router-dom';
+
+import { NavLink, } from 'react-router-dom';
 
 import { fetchTrendingDayMovie } from 'services/fetchApi';
 

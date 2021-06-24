@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { NavLink, Route } from 'react-router-dom';
+import { NavLink,} from 'react-router-dom';
 
 import { fetchMovieWithQuery } from 'services/fetchApi';
 

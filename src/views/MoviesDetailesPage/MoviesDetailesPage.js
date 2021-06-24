@@ -1,65 +1,82 @@
-import React, {Component} from 'react';
-import Axios from 'axios';
-import { NavLink, Route } from 'react-router-dom';
+import React, { Component } from 'react';
+import { NavLink, Route, Switch } from 'react-router-dom';
 
 import { fetchMovieId } from 'services/fetchApi';
+import CastSection from 'components/CastSection';
+import ReviewsSection from 'components/ReviewsSection';
 
-
-//  const MoviesDetailesPage = () => {
-//   return (<h1>Это MoviesDetailesPage</h1> )
-// }
 
 export default class MoviesDetailesPage extends Component {
-    state = {
-      films: {},
-    };
+  state = {
+    poster_path: null,
+    vote_average: null,
+    title: null,
+    genres: [],
+    overview: null,
+    release_date: null,
+   
+  };
 
   componentDidMount() {
     const { movieId } = this.props.match.params;
     fetchMovieId(movieId)
-    .then(response => this.setState({ films: response.data }))
-    .catch(error => this.setState({ error }))
-    //   ;
-   }
-  //   async componentDidMount() {
-  //     const response = await Axios.get(
-  //       // 'https://api.themoviedb.org/3/trending/all/day?api_key=7c7852d89a1cbff8e4a803b290e6dbdc',
-  //       'https://api.themoviedb.org/3/search/movie?api_key=7c7852d89a1cbff8e4a803b290e6dbdc&language=en-US&page=1&include_adult=false&query=cat'
-  //     );
-      
-  // console.log(response);
+      .then(response =>
+        this.setState({
+          ...response.data,
+          poster_path: `https://image.tmdb.org/t/p/w300${response.data.poster_path}`,
+          release_date: response.data.release_date.slice(0, 4),
+        }),
+      )
+      .catch(error => this.setState({ error }));
+  }
 
-  //   //   this.setState({ films: response.data.results });
-  //   }
-  
-    render() {
-        // const { match } = this.props;
-    
-        return (
-          <>
-            <h1>Это MoviesDetailesPage</h1>
-    
-             {/* <ul>
-              {this.state.films.map(film => (
-                <li key={film.id}>
-                  <NavLink to=''>{film.title || film.name}</NavLink>
-                  {/* <NavLink to={`${match.url}/${author.id}`}>{author.name}</NavLink> */}
-                {/* </li>
-              ))}
-            </ul>
-    
-            <Route
-              path={`${match.path}/:authorId`}
-              render={props => {
-                const bookId = Number(props.match.params.authorId);
-                const author = this.state.authors.find(({ id }) => id === bookId);
-    
-                return author && <AuthorBooks {...props} books={author.books} />;
-              }}
-            />  */}
-          </>
-        );
-      }
+  render() {
+    const { match } = this.props;
+    const { poster_path, vote_average, title, genres, overview, release_date } =
+      this.state;
+
+    return (
+      <>
+        <button type="button" onClick={this.props.history.goBack}>
+          Go back
+        </button>
+        <img src={poster_path} alt={title}/>
+        <h2>{`${title} (${release_date})`}</h2>
+        <p>User Score: {vote_average * 10}%</p>
+        <h3>Overview</h3>
+        <p>{overview}</p>
+        {genres.length > 0 && <h3>Genres</h3>}
+        {genres.length > 0 && genres.map(({ name }) => name).join(' ')}
+
+        <ul>
+        <li>
+          <NavLink
+            exact
+            to={`${match.url}/cast`}
+            className="NavLink"
+            activeClassName="NavLink--active"
+          >
+            Cast
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to={`${match.url}/reviews`}
+            className="NavLink"
+            activeClassName="NavLink--active"
+          >
+            Reviews
+          </NavLink>
+        </li>
+      </ul>
+
+      <Switch>
+ <Route exact path={`${match.path}/cast`} component={CastSection} />
+ <Route exact path={`${match.path}/reviews`} component={ReviewsSection} />
+      </Switch>
+      </>
+    );
+  }
 }
 
-// export default MoviesDetailesPage
+

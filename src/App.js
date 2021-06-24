@@ -34,7 +34,7 @@ function App() {
         <Route exact path="/" component={HomePage} />
         <Route exact path="/movies" component={MoviesPage} />
         <Route path="/movies/:movieId" component={MoviesDetailesPage} />
-                {/* <Redirect to="/" /> */}
+                <Redirect to="/" />
       </Switch>
     </div>
   );

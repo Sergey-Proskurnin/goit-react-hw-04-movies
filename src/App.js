@@ -32,9 +32,9 @@ function App() {
 
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route path="/movies" component={MoviesPage} />
-        <Route path="movies/:movieId" component={MoviesDetailesPage} />
-        <Redirect to="/" />
+        <Route exact path="/movies" component={MoviesPage} />
+        <Route path="/movies/:movieId" component={MoviesDetailesPage} />
+                {/* <Redirect to="/" /> */}
       </Switch>
     </div>
   );

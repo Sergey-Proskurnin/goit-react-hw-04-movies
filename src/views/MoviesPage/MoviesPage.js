@@ -45,7 +45,7 @@ export default class MoviesPage extends Component {
         <ul>
           {this.state.movies.map(film => (
             <li key={film.id}>
-              <NavLink to="">{film.title || film.name}</NavLink>
+              <NavLink to={`${this.props.match.url}/${film.id}`}>{film.title || film.name}</NavLink>
             </li>
           ))}
         </ul>

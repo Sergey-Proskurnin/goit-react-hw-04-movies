@@ -20,7 +20,15 @@ const fetchTrendingDayMovie = () => {
     });
     return axios.get(`${BASE_URL}/trending/all/day?${searchParams}`);
   };
+ 
+  const fetchMovieId = (movieId) => {
+    const searchParams = new URLSearchParams({
 
+      api_key: API_KEY,
+      language: 'en-US',
+    });
+    return axios.get(`${BASE_URL}/movie/${movieId}?${searchParams}`);
+  };
 
-
-export { fetchMovieWithQuery, fetchTrendingDayMovie };
+  // https://api.themoviedb.org/3/movie/{movie_id}?api_key=<<api_key>>&language=en-US
+export { fetchMovieWithQuery, fetchTrendingDayMovie, fetchMovieId };

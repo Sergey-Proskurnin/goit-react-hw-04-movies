@@ -25,7 +25,7 @@ export default class HomePage extends Component {
              <ul>
               {this.state.films.map(film => (
                 <li key={film.id}>
-                  <NavLink to=''>{film.title || film.name}</NavLink>
+                  <NavLink to={`/movies/${film.id}`}>{film.title || film.name}</NavLink>
                 
                 </li>
               ))}

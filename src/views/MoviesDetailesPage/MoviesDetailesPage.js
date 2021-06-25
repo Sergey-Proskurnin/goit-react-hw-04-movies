@@ -23,7 +23,7 @@ export default class MoviesDetailesPage extends Component {
       .then(response =>
         this.setState({
           ...response.data,
-          poster_path: `https://image.tmdb.org/t/p/w300${response.data.poster_path}`,
+            poster_path: `https://image.tmdb.org/t/p/w300${response.data.poster_path && response.data.poster_path}`,
           release_date: response.data.release_date.slice(0, 4),
         }),
       )
@@ -40,6 +40,9 @@ export default class MoviesDetailesPage extends Component {
         <button type="button" onClick={this.props.history.goBack}>
           Go back
         </button>
+        
+        {poster_path 
+        ? <>
         <img src={poster_path} alt={title}/>
         <h2>{`${title} (${release_date})`}</h2>
         <p>User Score: {vote_average * 10}%</p>
@@ -47,7 +50,6 @@ export default class MoviesDetailesPage extends Component {
         <p>{overview}</p>
         {genres.length > 0 && <h3>Genres</h3>}
         {genres.length > 0 && genres.map(({ name }) => name).join(' ')}
-
         <ul>
         <li>
           <NavLink
@@ -74,6 +76,10 @@ export default class MoviesDetailesPage extends Component {
  <Route exact path={`${match.path}/cast`} component={CastSection} />
  <Route exact path={`${match.path}/reviews`} component={ReviewsSection} />
       </Switch>
+        </>
+      :<p>We don't have any description for this movie.</p>}
+
+        
       </>
     );
   }

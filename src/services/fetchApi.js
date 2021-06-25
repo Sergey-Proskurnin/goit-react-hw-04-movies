@@ -29,6 +29,21 @@ const fetchTrendingDayMovie = () => {
     });
     return axios.get(`${BASE_URL}/movie/${movieId}?${searchParams}`);
   };
+  const fetchCastId = (movieId) => {
+    const searchParams = new URLSearchParams({
+      api_key: API_KEY,
+      language: 'en-US',
+    });
+    return axios.get(`${BASE_URL}/movie/${movieId}/credits?${searchParams}`);
+  };
+  const fetchReviewsId = (movieId) => {
+    const searchParams = new URLSearchParams({
+      api_key: API_KEY,
+      language: 'en-US',
+      page: 1,
+    });
+    return axios.get(`${BASE_URL}/movie/${movieId}/reviews?${searchParams}`);
+  };
 
-  // https://api.themoviedb.org/3/movie/{movie_id}?api_key=<<api_key>>&language=en-US
-export { fetchMovieWithQuery, fetchTrendingDayMovie, fetchMovieId };
+  
+export { fetchMovieWithQuery, fetchTrendingDayMovie, fetchMovieId, fetchCastId, fetchReviewsId };

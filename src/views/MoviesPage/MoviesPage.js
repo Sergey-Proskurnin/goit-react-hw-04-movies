@@ -9,19 +9,42 @@ export default class MoviesPage extends Component {
     query: '',
   };
 
+  componentDidMount() {
+    const searchParams = new URLSearchParams(this.props.location.search);
+
+    if (searchParams.get('query')) {
+      fetchMovieWithQuery(searchParams.get('query'))
+        .then(response => {
+          this.setState({ movies: response.data.results });
+        })
+        .catch(error => this.setState({ error }));
+    }
+  }
+
   handleChange = e => {
     const { value } = e.currentTarget;
-    this.setState({ query: value });
+    this.setState({ query: value, movies: [] });
   };
 
   handleSubmit = e => {
     e.preventDefault();
     const { query } = this.state;
-    fetchMovieWithQuery(query)
-      .then(response => this.setState({ movies: response.data.results }))
+    fetchMovieWithQuery(query.trim())
+      .then(response => {
+        this.setState({ movies: response.data.results });
+        this.onQueryChange();
+      })
       .catch(error => this.setState({ error }));
   };
 
+  onQueryChange = () => {
+    const { history, location } = this.props;
+
+    history.push({
+      pathname: location.pathname,
+      search: `query=${this.state.query.trim()}`,
+    });
+  };
   render() {
     return (
       <>

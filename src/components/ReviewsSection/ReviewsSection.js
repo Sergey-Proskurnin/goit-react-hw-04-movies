@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
 
+import OnLoader from 'components/OnLoader';
 import { fetchReviewsId } from 'services/fetchApi';
 
 export class ReviewsSection extends Component {
   state = {
     reviews: [],
+    isLoading: false,
   };
 
   componentDidMount() {
+    this.setState({ isLoading: true });
     const { movieId } = this.props.match.params;
     fetchReviewsId(movieId)
-      .then(response => this.setState({ reviews: response.data.results }))
+      .then(response =>
+        this.setState({ reviews: response.data.results, isLoading: false }),
+      )
       .catch(error => this.setState({ error }));
   }
 
@@ -18,6 +23,7 @@ export class ReviewsSection extends Component {
     const { reviews } = this.state;
     return (
       <div>
+        {this.state.isLoading && <OnLoader />}
         {reviews.length > 0 ? (
           <ul>
             {reviews.map(({ author, content, id }) => (

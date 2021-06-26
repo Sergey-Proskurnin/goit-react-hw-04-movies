@@ -2,20 +2,24 @@ import React, { Component } from 'react';
 
 import { fetchMovieWithQuery } from 'services/fetchApi';
 import MoviesList from 'components/MoviesList';
+import OnLoader from 'components/OnLoader';
+import SearchFormMovies from 'components/SearchFormMovies';
 
 export default class MoviesPage extends Component {
   state = {
     movies: [],
     query: '',
+    isLoading: false,
   };
 
   componentDidMount() {
     const searchParams = new URLSearchParams(this.props.location.search);
 
     if (searchParams.get('query')) {
+      this.setState({ isLoading: true });
       fetchMovieWithQuery(searchParams.get('query'))
         .then(response => {
-          this.setState({ movies: response.data.results });
+          this.setState({ movies: response.data.results, isLoading: false });
         })
         .catch(error => this.setState({ error }));
     }
@@ -28,13 +32,15 @@ export default class MoviesPage extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    this.setState({ isLoading: true });
     const { query } = this.state;
     fetchMovieWithQuery(query.trim())
       .then(response => {
         this.setState({ movies: response.data.results });
         this.onQueryChange();
       })
-      .catch(error => this.setState({ error }));
+      .catch(error => this.setState({ error }))
+      .finally(() => this.setState({ isLoading: false }));
   };
 
   onQueryChange = () => {
@@ -45,24 +51,16 @@ export default class MoviesPage extends Component {
       search: `query=${this.state.query.trim()}`,
     });
   };
+
   render() {
     return (
       <>
-        <form className={'form'} onSubmit={this.handleSubmit}>
-          <label htmlFor={''} className="lable">
-            <input
-              className={'input'}
-              type="text"
-              value={this.state.query}
-              onChange={this.handleChange}
-              id={''}
-            />
-          </label>
-
-          <button className={'button'} type="submit">
-            Search
-          </button>
-        </form>
+        <SearchFormMovies
+          handleSubmit={this.handleSubmit}
+          value={this.state.query}
+          handleChange={this.handleChange}
+        />
+        {this.state.isLoading && <OnLoader />}
         <MoviesList movies={this.state.movies} />
       </>
     );

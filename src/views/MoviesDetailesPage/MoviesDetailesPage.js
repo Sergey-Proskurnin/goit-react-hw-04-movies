@@ -6,6 +6,7 @@ import routes from 'routes';
 import MoviePageBar from 'components/MoviePageBar';
 import MovieCard from 'components/MovieCard';
 import contextProps from 'context/context';
+import OnLoader from 'components/OnLoader';
 
 const CastSection = lazy(() =>
   import('components/CastSection' /*webpackChunkName: "cast-view" */),
@@ -16,24 +17,25 @@ const ReviewsSection = lazy(() =>
 
 export default class MoviesDetailesPage extends Component {
   state = {
+    isLoading: false,
     poster_path: null,
     vote_average: null,
     title: null,
     genres: [],
     overview: null,
     release_date: null,
-    handleGoBack: () => { 
+    handleGoBack: () => {
       const { location, history } = this.props;
 
       if (location.state && location.state.from) {
         return history.push(location.state.from);
       }
       history.push(routes.home);
-     
     },
   };
 
   componentDidMount() {
+    this.setState({ isLoading: true });
     const { movieId } = this.props.match.params;
     fetchMovieId(movieId)
       .then(response =>
@@ -43,9 +45,11 @@ export default class MoviesDetailesPage extends Component {
             response.data.poster_path && response.data.poster_path
           }`,
           release_date: response.data.release_date.slice(0, 4),
+          isLoading: false 
         }),
       )
       .catch(error => this.setState({ error }));
+     
   }
 
   render() {
@@ -55,11 +59,19 @@ export default class MoviesDetailesPage extends Component {
     return (
       <contextProps.Provider value={this.state}>
         <>
+        {this.state.isLoading && (
+          <OnLoader/>
+        )}
           {poster_path ? (
             <>
+              
               <MovieCard />
               <MoviePageBar />
-              <Suspense fallback={<h1>Loading...</h1>}>
+              <Suspense
+                fallback={
+                  <OnLoader/>
+                }
+              >
                 <Switch>
                   <Route
                     exact

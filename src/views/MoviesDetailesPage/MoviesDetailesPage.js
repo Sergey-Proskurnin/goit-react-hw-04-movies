@@ -1,5 +1,6 @@
 import React, { Component, lazy, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import { fetchMovieId } from 'services/fetchApi';
 import routes from 'routes';
@@ -16,7 +17,7 @@ const ReviewsSection = lazy(() =>
 );
 
 export default class MoviesDetailesPage extends Component {
-  state = {
+  static defaultProps = {
     isLoading: false,
     poster_path: null,
     vote_average: null,
@@ -24,6 +25,29 @@ export default class MoviesDetailesPage extends Component {
     genres: [],
     overview: null,
     release_date: null,
+  };
+
+  static propTypes = {
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
+    isLoading: PropTypes.bool,
+    poster_path: PropTypes.string,
+    vote_average: PropTypes.string,
+    title: PropTypes.string,
+    genres: PropTypes.array,
+    overview: PropTypes.string,
+    release_date: PropTypes.string,
+  };
+
+  state = {
+    isLoading: this.isLoading,
+    poster_path: this.poster_path,
+    vote_average: this.vote_average,
+    title: this.title,
+    genres: this.genres,
+    overview: this.overview,
+    release_date: this.release_date,
     handleGoBack: () => {
       const { location, history } = this.props;
 
@@ -45,11 +69,10 @@ export default class MoviesDetailesPage extends Component {
             response.data.poster_path && response.data.poster_path
           }`,
           release_date: response.data.release_date.slice(0, 4),
-          isLoading: false 
+          isLoading: false,
         }),
       )
       .catch(error => this.setState({ error }));
-     
   }
 
   render() {
@@ -59,19 +82,12 @@ export default class MoviesDetailesPage extends Component {
     return (
       <contextProps.Provider value={this.state}>
         <>
-        {this.state.isLoading && (
-          <OnLoader/>
-        )}
+          {this.state.isLoading && <OnLoader />}
           {poster_path ? (
             <>
-              
               <MovieCard />
               <MoviePageBar />
-              <Suspense
-                fallback={
-                  <OnLoader/>
-                }
-              >
+              <Suspense fallback={<OnLoader />}>
                 <Switch>
                   <Route
                     exact

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import contextProps from 'context/context';
 
@@ -16,13 +17,13 @@ const MovieCard = () => {
       }) => {
         return (
           <>
-          <button
-            type="button"
-            // onClick={this.props.history.goBack}>
-            onClick={handleGoBack}
-          >
-            Go back
-          </button>
+            <button
+              type="button"
+              // onClick={this.props.history.goBack}>
+              onClick={handleGoBack}
+            >
+              Go back
+            </button>
             <img src={poster_path} alt={title} />
             <h2>{`${title} (${release_date})`}</h2>
             <p>User Score: {vote_average * 10}%</p>
@@ -35,6 +36,9 @@ const MovieCard = () => {
       }}
     </contextProps.Consumer>
   );
+};
+MovieCard.prototype = {
+  handleGoBack: PropTypes.func.isRequired,
 };
 
 export default MovieCard;

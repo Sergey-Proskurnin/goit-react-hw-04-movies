@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { fetchMovieWithQuery } from 'services/fetchApi';
 import MoviesList from 'components/MoviesList';
@@ -6,6 +7,11 @@ import OnLoader from 'components/OnLoader';
 import SearchFormMovies from 'components/SearchFormMovies';
 
 export default class MoviesPage extends Component {
+  static propTypes = {
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+  };
+
   state = {
     movies: [],
     query: '',

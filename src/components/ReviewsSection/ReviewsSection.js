@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import OnLoader from 'components/OnLoader';
 import { fetchReviewsId } from 'services/fetchApi';
 
 export class ReviewsSection extends Component {
+  static propTypes = {
+    match: PropTypes.object.isRequired,
+  };
+
   state = {
     reviews: [],
     isLoading: false,

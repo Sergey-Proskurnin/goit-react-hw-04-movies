@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
 import OnLoader from 'components/OnLoader';
-
 
 import { fetchCastId } from 'services/fetchApi';
 
 export class CastSection extends Component {
-  static propTypes = {};
+  static propTypes = {
+    match: PropTypes.object.isRequired,
+  };
   state = {
     cast: [],
     isLoading: false,
@@ -27,9 +28,7 @@ export class CastSection extends Component {
     const { cast } = this.state;
     return (
       <>
-        {this.state.isLoading && (
-          <OnLoader/>
-        )}
+        {this.state.isLoading && <OnLoader />}
         <ul>
           {cast.map(({ cast_id, character, name, profile_path }) => (
             <li key={cast_id}>

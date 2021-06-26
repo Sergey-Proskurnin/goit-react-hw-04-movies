@@ -1,7 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import './App.css';
 
+import './App.css';
 import routes from 'routes';
 import AppBar from 'components/AppBar';
 import OnLoader from 'components/OnLoader';

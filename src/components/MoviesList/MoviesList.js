@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const MoviesList = ({ movies, location }) => {
   return (
@@ -19,6 +20,10 @@ const MoviesList = ({ movies, location }) => {
       ))}
     </ul>
   );
+};
+MoviesList.prototype = {
+  movies: PropTypes.array.isRequired,
+  location: PropTypes.object.isRequired,
 };
 
 export default withRouter(MoviesList);

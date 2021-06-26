@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
-import { NavLink,} from 'react-router-dom';
-
 import { fetchMovieWithQuery } from 'services/fetchApi';
+import MoviesList from 'components/MoviesList';
 
 export default class MoviesPage extends Component {
   state = {
@@ -26,7 +25,7 @@ export default class MoviesPage extends Component {
   render() {
     return (
       <>
-         <form className={'form'} onSubmit={this.handleSubmit}>
+        <form className={'form'} onSubmit={this.handleSubmit}>
           <label htmlFor={''} className="lable">
             <input
               className={'input'}
@@ -41,14 +40,7 @@ export default class MoviesPage extends Component {
             Search
           </button>
         </form>
-
-        <ul>
-          {this.state.movies.map(film => (
-            <li key={film.id}>
-              <NavLink to={`${this.props.match.url}/${film.id}`}>{film.title || film.name}</NavLink>
-            </li>
-          ))}
-        </ul>
+        <MoviesList movies={this.state.movies} />
       </>
     );
   }

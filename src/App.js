@@ -1,41 +1,34 @@
-import { Route, NavLink, Switch, Redirect } from "react-router-dom";
-import "./App.css";
+import React, { Suspense, lazy } from 'react';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import './App.css';
 
-import HomePage from 'views/HomePage';
-import MoviesPage from 'views/MoviesPage';
-import MoviesDetailesPage from 'views/MoviesDetailesPage';
+import routes from 'routes';
+import AppBar from 'components/AppBar';
+
+const HomePage = lazy(() =>
+  import('views/HomePage' /*webpackChunkName: "home-view" */),
+);
+const MoviesPage = lazy(() =>
+  import('views/MoviesPage' /*webpackChunkName: "movies-view" */),
+);
+const MoviesDetailesPage = lazy(() =>
+  import(
+    'views/MoviesDetailesPage' /*webpackChunkName: "movies-detailes-view" */
+  ),
+);
 
 function App() {
   return (
     <div className="App">
-      <ul>
-        <li>
-          <NavLink
-            exact
-            to="/"
-            className="NavLink"
-            activeClassName="NavLink--active"
-          >
-            Home
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/movies"
-            className="NavLink"
-            activeClassName="NavLink--active"
-          >
-            Movies
-          </NavLink>
-        </li>
-      </ul>
-
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route exact path="/movies" component={MoviesPage} />
-        <Route path="/movies/:movieId" component={MoviesDetailesPage} />
-        <Redirect to="/" />
-      </Switch>
+      <AppBar />
+      <Suspense fallback={<h1>Loading...</h1>}>
+        <Switch>
+          <Route exact path={routes.home} component={HomePage} />
+          <Route exact path={routes.movies} component={MoviesPage} />
+          <Route path={routes.movieDetails} component={MoviesDetailesPage} />
+          <Redirect to="/" />
+        </Switch>
+      </Suspense>
     </div>
   );
 }

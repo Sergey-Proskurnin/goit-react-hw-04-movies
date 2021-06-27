@@ -78,7 +78,7 @@ export default class MoviesDetailesPage extends Component {
   render() {
     const { match } = this.props;
     const { poster_path } = this.state;
-
+   
     return (
       <contextProps.Provider value={this.state}>
         <>
@@ -86,7 +86,7 @@ export default class MoviesDetailesPage extends Component {
           {poster_path ? (
             <>
               <MovieCard />
-              <MoviePageBar />
+              <MoviePageBar locationSearch={this.props.location.state.from}/>
               <Suspense fallback={<OnLoader />}>
                 <Switch>
                   <Route

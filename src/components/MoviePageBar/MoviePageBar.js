@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import s from './MoviePageBar.module.css';
 
-const MoviePageBar = ({ match }) => {
+const MoviePageBar = ({ match, locationSearch }) => {
   return (
     <section className={s.MovieBar}>
       <h4>Additional information</h4>
@@ -12,7 +12,10 @@ const MoviePageBar = ({ match }) => {
         <li>
           <NavLink
             exact
-            to={`${match.url}/cast`}
+            to={{
+              pathname: `${match.url}/cast`,
+              state: { from: locationSearch },
+            }}
             className={s.NavLink}
             activeClassName="NavLink--active"
           >
@@ -21,7 +24,10 @@ const MoviePageBar = ({ match }) => {
         </li>
         <li>
           <NavLink
-            to={`${match.url}/reviews`}
+            to={{
+              pathname: `${match.url}/reviews`,
+              state: { from: locationSearch },
+            }}
             className={s.NavLink}
             activeClassName="NavLink--active"
           >

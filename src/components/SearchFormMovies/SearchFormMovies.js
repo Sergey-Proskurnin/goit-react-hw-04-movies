@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import s from './SearchFormMovies.module.css'
+
 const SearchFormMovies = ({ handleSubmit, value, handleChange }) => {
   return (
     <form className={'form'} onSubmit={handleSubmit}>
       <label htmlFor={''} className="lable">
         <input
-          className={'input'}
+          className={s.input}
           type="text"
           value={value}
           onChange={handleChange}
@@ -14,7 +16,7 @@ const SearchFormMovies = ({ handleSubmit, value, handleChange }) => {
         />
       </label>
 
-      <button className={'button'} type="submit">
+      <button className={s.button} type="submit">
         Search
       </button>
     </form>

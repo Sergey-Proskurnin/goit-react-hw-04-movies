@@ -5,6 +5,7 @@ import './App.css';
 import routes from 'routes';
 import AppBar from 'components/AppBar';
 import OnLoader from 'components/OnLoader';
+import Container from 'components/Container'
 
 const HomePage = lazy(() =>
   import('views/HomePage' /*webpackChunkName: "home-view" */),
@@ -22,6 +23,7 @@ function App() {
   return (
     <div className="App">
       <AppBar />
+      <Container>
       <Suspense fallback={<OnLoader />}>
         <Switch>
           <Route exact path={routes.home} component={HomePage} />
@@ -30,6 +32,7 @@ function App() {
           <Redirect to={routes.home} />
         </Switch>
       </Suspense>
+      </Container>
     </div>
   );
 }

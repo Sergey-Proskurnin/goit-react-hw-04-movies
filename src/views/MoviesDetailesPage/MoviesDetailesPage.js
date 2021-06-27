@@ -72,7 +72,7 @@ export default class MoviesDetailesPage extends Component {
           isLoading: false,
         }),
       )
-      .catch(error => this.setState({ error }));
+      .catch(error => this.setState({ error, isLoading: false }));
   }
 
   render() {

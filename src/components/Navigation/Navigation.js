@@ -2,15 +2,16 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import routes from 'routes';
+import s from './Navigation.module.css'
 
 const Navigation = () => {
   return (
-    <ul>
-      <li>
+<ul className={s.listNav}>
+      <li className={s.ItemNav}>
         <NavLink
           exact
           to={routes.home}
-          className="NavLink"
+          className={s.NavLink}
           activeClassName="NavLink--active"
         >
           Home
@@ -19,7 +20,7 @@ const Navigation = () => {
       <li>
         <NavLink
           to={routes.movies}
-          className="NavLink"
+          className={s.NavLink}
           activeClassName="NavLink--active"
         >
           Movies

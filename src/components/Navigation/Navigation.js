@@ -2,11 +2,11 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import routes from 'routes';
-import s from './Navigation.module.css'
+import s from './Navigation.module.css';
 
 const Navigation = () => {
   return (
-<ul className={s.listNav}>
+    <ul className={s.listNav}>
       <li className={s.ItemNav}>
         <NavLink
           exact

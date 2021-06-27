@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import s from './MoviePageBar.module.css'
+import s from './MoviePageBar.module.css';
 
 const MoviePageBar = ({ match }) => {
   return (
@@ -29,7 +29,7 @@ const MoviePageBar = ({ match }) => {
           </NavLink>
         </li>
       </ul>
-      </section>
+    </section>
   );
 };
 

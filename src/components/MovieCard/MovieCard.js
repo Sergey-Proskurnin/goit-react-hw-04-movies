@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BsArrowLeftShort } from "react-icons/bs";
-
+import { BsArrowLeftShort } from 'react-icons/bs';
 
 import contextProps from 'context/context';
 import s from './MovieCard.module.css';
@@ -25,7 +24,9 @@ const MovieCard = () => {
               type="button"
               // onClick={this.props.history.goBack}>
               onClick={handleGoBack}
-            > <BsArrowLeftShort size='2em'/>
+            >
+              {' '}
+              <BsArrowLeftShort size="2em" />
               Go back
             </button>
             <div className={s.Card}>

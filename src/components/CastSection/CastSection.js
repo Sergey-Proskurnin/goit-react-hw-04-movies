@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import OnLoader from 'components/OnLoader';
-
 import { fetchCastId } from 'services/fetchApi';
 
 export class CastSection extends Component {

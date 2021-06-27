@@ -5,7 +5,7 @@ import s from './AppBar.module.css';
 
 const AppBar = () => {
   return (
-  <header className={s.AppBar}>
+    <header className={s.AppBar}>
       <Navigation />
     </header>
   );

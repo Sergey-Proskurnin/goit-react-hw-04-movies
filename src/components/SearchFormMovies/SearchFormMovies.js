@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import s from './SearchFormMovies.module.css'
+import s from './SearchFormMovies.module.css';
 
 const SearchFormMovies = ({ handleSubmit, value, handleChange }) => {
   return (

@@ -8,6 +8,7 @@ import MoviePageBar from 'components/MoviePageBar';
 import MovieCard from 'components/MovieCard';
 import contextProps from 'context/context';
 import OnLoader from 'components/OnLoader';
+import { makeId } from 'components/slugId';
 
 const CastSection = lazy(() =>
   import('components/CastSection' /*webpackChunkName: "cast-view" */),
@@ -50,7 +51,7 @@ export default class MoviesDetailesPage extends Component {
     release_date: this.release_date,
     handleGoBack: () => {
       const { location, history } = this.props;
-
+      // history.push(location?.state?.from || routes.home);
       if (location.state && location.state.from) {
         return history.push(location.state.from);
       }
@@ -58,10 +59,12 @@ export default class MoviesDetailesPage extends Component {
     },
   };
 
+  slugId = id => id.match(/[a-zA-Z0-9]+$/)[0];
+
   componentDidMount() {
     this.setState({ isLoading: true });
     const { movieId } = this.props.match.params;
-    fetchMovieId(movieId)
+    fetchMovieId(makeId(movieId))
       .then(response =>
         this.setState({
           ...response.data,
@@ -78,7 +81,7 @@ export default class MoviesDetailesPage extends Component {
   render() {
     const { match } = this.props;
     const { poster_path } = this.state;
-   
+
     return (
       <contextProps.Provider value={this.state}>
         <>
@@ -86,7 +89,7 @@ export default class MoviesDetailesPage extends Component {
           {poster_path ? (
             <>
               <MovieCard />
-              <MoviePageBar locationSearch={this.props.location.state.from}/>
+              <MoviePageBar locationSearch={this.props.location.state.from} />
               <Suspense fallback={<OnLoader />}>
                 <Switch>
                   <Route

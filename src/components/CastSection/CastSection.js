@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import OnLoader from 'components/OnLoader';
 import { fetchCastId } from 'services/fetchApi';
+import { makeId } from 'components/slugId';
 
 export class CastSection extends Component {
   static propTypes = {
@@ -16,7 +17,7 @@ export class CastSection extends Component {
   componentDidMount() {
     this.setState({ isLoading: true });
     const { movieId } = this.props.match.params;
-    fetchCastId(movieId)
+    fetchCastId(makeId(movieId))
       .then(response =>
         this.setState({ cast: response.data.cast, isLoading: false }),
       )

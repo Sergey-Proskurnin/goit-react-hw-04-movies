@@ -25,9 +25,10 @@ export default class MoviesPage extends Component {
       this.setState({ isLoading: true });
       fetchMovieWithQuery(searchParams.get('query'))
         .then(response => {
-          this.setState({ movies: response.data.results, isLoading: false });
+          this.setState({ movies: response.data.results });
         })
-        .catch(error => this.setState({ error }));
+        .catch(error => this.setState({ error }))
+        .finally(() => this.setState({ isLoading: false }));
     }
   }
 

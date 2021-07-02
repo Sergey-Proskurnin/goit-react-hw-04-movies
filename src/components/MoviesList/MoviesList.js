@@ -3,6 +3,9 @@ import { NavLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import s from './MoviesList.module.css';
+import { makeIdSlug } from 'components/slugId';
+
+// const makeSlug = (string) => slugify(string, {remove: (/[*+~.()'"!:@]/g), lower: true,})
 
 const MoviesList = ({ movies, location }) => {
   return (
@@ -13,11 +16,13 @@ const MoviesList = ({ movies, location }) => {
           <NavLink
             className={s.NavLink}
             to={{
-              pathname: `/movies/${film.id}`,
+              pathname: `/movies/${makeIdSlug(
+                `${film.title || film.name} ${film.id}`,
+              )}`,
               state: { from: location },
             }}
           >
-            {film.title || film.name}
+            {film.title || film.name}.
           </NavLink>
         </li>
       ))}

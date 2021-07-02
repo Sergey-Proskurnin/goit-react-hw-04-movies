@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import OnLoader from 'components/OnLoader';
 import { fetchReviewsId } from 'services/fetchApi';
+import { makeId } from 'components/slugId';
 
 export class ReviewsSection extends Component {
   static propTypes = {
@@ -17,7 +18,7 @@ export class ReviewsSection extends Component {
   componentDidMount() {
     this.setState({ isLoading: true });
     const { movieId } = this.props.match.params;
-    fetchReviewsId(movieId)
+    fetchReviewsId(makeId(movieId))
       .then(response =>
         this.setState({ reviews: response.data.results, isLoading: false }),
       )

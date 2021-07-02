@@ -14,7 +14,7 @@ const MoviePageBar = ({ match, location }) => {
             exact
             to={{
               pathname: `${match.url}/cast`,
-              state: { from: location.state.from },
+              state: { from: location.state?.from && location.state.from },
             }}
             className={s.NavLink}
             activeClassName="NavLink--active"
@@ -26,7 +26,7 @@ const MoviePageBar = ({ match, location }) => {
           <NavLink
             to={{
               pathname: `${match.url}/reviews`,
-              state: { from: location.state.from },
+              state: { from: location.state?.from && location.state.from },
             }}
             className={s.NavLink}
             activeClassName="NavLink--active"

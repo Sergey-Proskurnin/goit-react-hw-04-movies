@@ -100,7 +100,7 @@ export default class MoviesDetailesPage extends Component {
                 <div>
                   <MovieCard />
                   <MoviePageBar
-                    locationSearch={this.props.location.state.from}
+                  // locationSearch={this.props.location.state.from}
                   />{' '}
                 </div>
               </CSSTransition>

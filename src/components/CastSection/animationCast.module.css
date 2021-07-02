@@ -1,20 +1,8 @@
-.enter {
-  opacity: 0;
+.appear {
   transform: translateX(-100%);
 }
-.enterActive {
-  opacity: 1;
-  transform: translateX(0);
-  transition: all 400ms linear;
-}
 
-.exit {
-  opacity: 1;
+.appearActive {
   transform: translateX(0);
-}
-
-.exitActive {
-  opacity: 0;
-  transform: translateX(-100%);
-  transition: all 400ms linear;
+  transition: transform 350ms linear;
 }

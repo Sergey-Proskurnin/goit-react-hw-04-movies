@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { CSSTransition } from 'react-transition-group';
 
 import OnLoader from 'components/OnLoader';
 import { fetchReviewsId } from 'services/fetchApi';
 import { makeId } from 'components/slugId';
 import sA from './animationReviews.module.css';
+import Reviews from 'components/Reviews';
 
 export class ReviewsSection extends Component {
   static propTypes = {
@@ -31,20 +32,15 @@ export class ReviewsSection extends Component {
     return (
       <>
         {this.state.isLoading && <OnLoader />}
-        <TransitionGroup component="ul">
-          {reviews.length > 0 ? (
-            reviews.map(({ author, content, id }) => (
-              <CSSTransition key={id} timeout={400} classNames={sA}>
-                <li key={id}>
-                  <h3>Author: {author}</h3>
-                  <p>{content}</p>
-                </li>
-              </CSSTransition>
-            ))
-          ) : (
-            <p>We don't have any reviews for this movie.</p>
-          )}
-        </TransitionGroup>
+        <CSSTransition
+          in={true}
+          appear={true}
+          timeout={350}
+          classNames={sA}
+          unmountOnExit
+        >
+          <Reviews reviews={reviews} />
+        </CSSTransition>
       </>
     );
   }

@@ -1,6 +1,7 @@
 import React, { Component, lazy, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { CSSTransition } from 'react-transition-group';
 
 import { fetchMovieId } from 'services/fetchApi';
 import routes from 'routes';
@@ -9,6 +10,7 @@ import MovieCard from 'components/MovieCard';
 import contextProps from 'context/context';
 import OnLoader from 'components/OnLoader';
 import { makeId } from 'components/slugId';
+import sA from './MoviesDetailesPage.module.css';
 
 const CastSection = lazy(() =>
   import('components/CastSection' /*webpackChunkName: "cast-view" */),
@@ -88,8 +90,20 @@ export default class MoviesDetailesPage extends Component {
           {this.state.isLoading && <OnLoader />}
           {poster_path ? (
             <>
-              <MovieCard />
-              <MoviePageBar locationSearch={this.props.location.state.from} />
+              <CSSTransition
+                in={true}
+                appear={true}
+                timeout={250}
+                classNames={sA}
+                unmountOnExit
+              >
+                <div>
+                  <MovieCard />
+                  <MoviePageBar
+                    locationSearch={this.props.location.state.from}
+                  />{' '}
+                </div>
+              </CSSTransition>
               <Suspense fallback={<OnLoader />}>
                 <Switch>
                   <Route

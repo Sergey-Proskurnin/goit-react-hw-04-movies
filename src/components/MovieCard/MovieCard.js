@@ -18,7 +18,7 @@ const MovieCard = () => {
         handleGoBack,
       }) => {
         return (
-          <>
+          <div>
             <button
               className={s.BtnGoBack}
               type="button"
@@ -29,6 +29,7 @@ const MovieCard = () => {
               <BsArrowLeftShort size="2em" />
               Go back
             </button>
+
             <div className={s.Card}>
               <div className={'ImgPoster'}>
                 <img src={poster_path} alt={title} />
@@ -42,7 +43,7 @@ const MovieCard = () => {
                 {genres.length > 0 && genres.map(({ name }) => name).join(' ')}
               </div>
             </div>
-          </>
+          </div>
         );
       }}
     </contextProps.Consumer>
